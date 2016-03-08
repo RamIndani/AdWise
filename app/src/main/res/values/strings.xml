@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AdWise</string>
+    <string name="user_name">User Name</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+</resources>

@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/logo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@mipmap/ic_launcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
         android:layout_centerHorizontal="true"/>
     <EditText
         android:id="@+id/user_name"
@@ -26,12 +26,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:inputType="textPassword"
         android:hint="@string/password"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_error"
+        android:layout_below="@id/password"
+        android:visibility="gone"
+        android:text="@string/login_failed"
+        android:textColor="@color/red"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/signup"
-        android:layout_below="@id/password"
+        android:id="@+id/signup_new_user"
+        android:layout_below="@id/login_error"
         android:layout_centerHorizontal="true"
         android:text="@string/signup"/>
 </RelativeLayout>

@@ -4,4 +4,10 @@
     <string name="password">password</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
+    <string name="password_empty">Password is required</string>
+    <string name="user_name_empty">Username is required</string>
+    <string name="login_failed">Login failed check credentials</string>
+    <string name="restapi_base_url">http://50.18.97.249:8080</string>
+    <string name="restapi_signup">/user</string>
+    <string name="restapi_login">/user/login</string>
 </resources>

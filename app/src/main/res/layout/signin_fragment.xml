@@ -26,13 +26,22 @@
         android:inputType="textPassword"
         android:layout_below="@id/user_name"
         android:hint="@string/password"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_error"
+        android:layout_below="@id/password"
+        android:visibility="gone"
+        android:text="@string/login_failed"
+        android:textColor="@color/red"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:layout_below="@id/password">
+        android:layout_below="@id/login_error">
 
         <Button
             android:layout_width="0dp"
@@ -41,6 +50,7 @@
             android:id="@+id/login"
             android:text="@string/login"
             android:typeface="sans"
+            android:onClick="login"
             />
         <Button
             android:layout_width="0dp"

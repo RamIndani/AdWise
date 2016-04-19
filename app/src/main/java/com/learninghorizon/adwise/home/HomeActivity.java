@@ -34,18 +34,19 @@ public class HomeActivity extends AppCompatActivity implements ActionBar.TabList
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setCustomTabView(R.layout.custom_tab, R.id.item_title);
+        //mSlidingTabLayout.setCustomTabView(R.layout.custom_tab, R.id.item_title);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
-    }
+    }*/
+
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         mViewPager.setCurrentItem(tab.getPosition());

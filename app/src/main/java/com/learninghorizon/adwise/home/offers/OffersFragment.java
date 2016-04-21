@@ -4,11 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.learninghorizon.adwise.R;
+import com.learninghorizon.adwise.home.offers.Adapter.OffersAdapter;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,8 @@ public class OffersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    @Bind(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     public OffersFragment() {
         // Required empty public constructor
@@ -59,7 +68,12 @@ public class OffersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offers, container, false);
+        View view= inflater.inflate(R.layout.fragment_offers, container, false);
+        ButterKnife.bind(this,view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(new OffersAdapter(new String[] {"Air glide", "Air flow", "Bunjee", "fire dragon"}));
+        return view;
     }
 
 }

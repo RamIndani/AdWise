@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import com.learninghorizon.adwise.R;
 
+import java.util.Random;
+
 /**
  * Created by ramnivasindani on 4/18/16.
  */
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder> {
 
     private String[] titles;
+    private String[] colors = {"#F44336","#9C27B0", "#673AB7", "#2196F3", "#03A9F4", "#009688"};
     public OffersAdapter(String[] titles){
         this.titles = titles;
     }
@@ -33,8 +36,10 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.titleTextView.setText(titles[position]);
-
-        holder.cardView.setCardBackgroundColor(Color.argb(100, 0,255,0));
+        Random colorNumber = new Random();
+        int nextColor =colorNumber.nextInt(colors.length);
+        String newTileColor = colors[nextColor];
+        holder.cardView.setCardBackgroundColor(Color.parseColor(newTileColor));
     }
 
 

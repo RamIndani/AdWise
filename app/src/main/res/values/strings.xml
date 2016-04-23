@@ -18,4 +18,5 @@
     <string name="favorites">Favorite</string>
     <string name="profile">Profile</string>
     <string name="adwise_shared_preferences">adwise_data</string>
+    <string name="adwise_monitoring_identifier">adwise</string>
 </resources>

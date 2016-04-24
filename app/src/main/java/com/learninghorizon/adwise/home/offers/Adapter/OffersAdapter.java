@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.learninghorizon.adwise.R;
+import com.learninghorizon.adwise.home.spot.Spot;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -17,9 +19,9 @@ import java.util.Random;
  */
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder> {
 
-    private String[] titles;
+    private List<Spot> titles;
     private String[] colors = {"#F44336","#9C27B0", "#673AB7", "#2196F3", "#03A9F4", "#009688"};
-    public OffersAdapter(String[] titles){
+    public OffersAdapter(List<Spot> titles){
         this.titles = titles;
     }
 
@@ -35,7 +37,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.titleTextView.setText(titles[position]);
+        holder.titleTextView.setText(titles.get(position).getSpotName());
         Random colorNumber = new Random();
         int nextColor =colorNumber.nextInt(colors.length);
         String newTileColor = colors[nextColor];
@@ -45,7 +47,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return titles.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:name=".loginsignup.AdWiseApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".loginsignup.LoginSignup">
+        <activity android:name=".loginsignup.LoginSignup"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.HomeActivity"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 

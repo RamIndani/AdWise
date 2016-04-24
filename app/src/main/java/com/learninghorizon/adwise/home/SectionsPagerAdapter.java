@@ -30,10 +30,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
                 return new OffersFragment();
             case 1:
                 return new FavoritesFragment();
-            case 2:
-               return new SearchFragment();
-            case 3:
-                return new ProfileFragment();
             default:
                 return null;
 
@@ -42,7 +38,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
     String title;
@@ -55,12 +51,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
                 break;
             case 1:
                 title = mContext.getString(R.string.favorites);
-                break;
-            case 2:
-                title = mContext.getString(R.string.search);
-                break;
-            case 3:
-                title = mContext.getString(R.string.profile);
                 break;
 
             default:

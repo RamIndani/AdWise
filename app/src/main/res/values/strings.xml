@@ -19,4 +19,7 @@
     <string name="profile">Profile</string>
     <string name="adwise_shared_preferences">adwise_data</string>
     <string name="adwise_monitoring_identifier">adwise</string>
+    <string name="get_location_id">/map/</string>
+    <string name="rest_api_spots">/spots</string>
+    <string name="restapi_map">/map/</string>
 </resources>

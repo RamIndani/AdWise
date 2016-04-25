@@ -8,8 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.learninghorizon.adwise.R;
 import com.learninghorizon.adwise.home.favorites.FavoritesFragment;
 import com.learninghorizon.adwise.home.offers.OffersFragment;
-import com.learninghorizon.adwise.home.profile.ProfileFragment;
-import com.learninghorizon.adwise.home.search.SearchFragment;
 
 /**
  * Created by ramnivasindani on 4/14/16.
@@ -52,7 +50,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
             case 1:
                 title = mContext.getString(R.string.favorites);
                 break;
-
             default:
                 break;
         }

@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.estimote.sdk.Beacon;
 import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonArray;
 import com.learninghorizon.adwise.R;
 import com.learninghorizon.adwise.loginsignup.AdWiseApplication;
@@ -62,6 +63,33 @@ public class RestUtil {
             @Override
             public void onErrorResponse(VolleyError error) {
                 offersPresenter.updateLocationId("");
+            }
+        }
+        );
+        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
+    }
+
+    public static void registerHistory(String beaconId, String userEmailId, final OffersPresenter offersPresenter, final Beacon beacon) {
+        Context context = AdWiseApplication.getIntance();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                context.getString(R.string.restapi_base_url).
+                        concat(context.getString(R.string.restapi_history)).
+                        concat("/").
+                        concat(userEmailId).
+                        concat("/").
+                        concat(beaconId),
+                new Response.Listener<String>() {
+
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "successful");
+                offersPresenter.updateOffersForSpot(response, true, beacon);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                offersPresenter.updateOffersForSpot("", false, beacon);
             }
         }
         );

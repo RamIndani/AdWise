@@ -2,6 +2,8 @@ package com.learninghorizon.adwise.home.offers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +16,16 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.Gson;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.GsonBuilder;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.stream.JsonReader;
 import com.learninghorizon.adwise.R;
+import com.learninghorizon.adwise.home.coupon.Coupon;
 import com.learninghorizon.adwise.home.offers.Adapter.OffersAdapter;
 import com.learninghorizon.adwise.home.offers.service.OffersService;
 import com.learninghorizon.adwise.home.offers.util.OffersPresenter;
 import com.learninghorizon.adwise.home.spot.Spot;
+import com.learninghorizon.adwise.home.user.UserDataUtil;
 import com.learninghorizon.adwise.loginsignup.AdWiseApplication;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +61,9 @@ public class OffersFragment extends Fragment implements OffersPresenter,BeaconMa
     RecyclerView recyclerView;
     private OffersAdapter offersAdapter;
     private List<Spot> allSpots;
+    Handler offersHandler;
+    Handler timerHandler;
+    private Runnable timerRunnable;
 
     public OffersFragment() {
         // Required empty public constructor
@@ -89,6 +93,18 @@ public class OffersFragment extends Fragment implements OffersPresenter,BeaconMa
         beaconManager = new BeaconManager(AdWiseApplication.getIntance().getApplicationContext());
         beaconManager.connect(this);
         beaconManager.setMonitoringListener(this);
+        offersHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if(msg.getData().getBoolean("history")) {
+                }else if(msg.getData().getBoolean("offerDetails")){
+                    offersService.getOfferDetails(currentBeacon);
+                }else if(msg.getData().getBoolean("offer")){
+                    offersService.getOffer(currentBeacon);
+                }
+                return true;
+            }
+        });
 
     }
 
@@ -121,6 +137,13 @@ public class OffersFragment extends Fragment implements OffersPresenter,BeaconMa
 
 
     @Override
+    public void onStop(){
+        super.onStop();
+        if(null != timerHandler && null !=timerRunnable){
+            timerHandler.removeCallbacks(timerRunnable);
+        }
+    }
+    @Override
     public void onEnteredRegion(Region region, List<Beacon> list) {
         //getLocationMapId and all spots
 
@@ -141,14 +164,15 @@ public class OffersFragment extends Fragment implements OffersPresenter,BeaconMa
             currentBeacon = list.get(0);
 
             if(!currentBeacon.equals(previousBeacon) && measuredPower > list.get(0).getMeasuredPower()){
-                Toast.makeText(activity.getApplicationContext(), "Found new beacon : " + list.get(0).getProximityUUID(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(activity.getApplicationContext(), "Found new beacon : " + list.get(0).getProximityUUID(), Toast.LENGTH_LONG).show();
                 //check for old listeners, start new timer
                 //request new coupon
                 if(null != previousBeacon && null != uuid) {
                     if (!currentBeacon.getProximityUUID().equals(previousBeacon.getProximityUUID())) {
-                        if(!uuid.equals(currentBeacon.getProximityUUID())) {
+                        if(!String.valueOf(uuid).toLowerCase().trim().equals(String.valueOf(currentBeacon.getProximityUUID()).toLowerCase().trim())) {
                             offersService.getLocationId(String.valueOf(currentBeacon.getProximityUUID()), this);
                             uuid = currentBeacon.getProximityUUID();
+                            startTimer(currentBeacon);
                         }
                     }
                 }else{
@@ -158,6 +182,30 @@ public class OffersFragment extends Fragment implements OffersPresenter,BeaconMa
                 uuid = currentBeacon.getProximityUUID();
             }
 
+        }
+    }
+
+    private void startTimer(final Beacon offersForBeacon) {
+        try {
+            timerHandler = new Handler();
+            timerRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (currentBeacon.equals(offersForBeacon)) {
+                        try {
+                            offersService.recordUserHistory(findCurrentSpotId(String.valueOf(currentBeacon.getMajor()),
+                                    String.valueOf(currentBeacon.getMinor()), String.valueOf(currentBeacon.getProximityUUID())),
+                                    UserDataUtil.getInstance().getUserEmailId(),
+                                    OffersFragment.this, currentBeacon);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+            timerHandler.postDelayed(timerRunnable, Integer.valueOf(getActivity().getResources().getString(R.string.history_timer)));
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -185,6 +233,68 @@ public class OffersFragment extends Fragment implements OffersPresenter,BeaconMa
             allSpots.clear();
             allSpots.addAll(Arrays.asList(spots));
             offersAdapter.notifyDataSetChanged();
+            startTimer(currentBeacon);
         }
     }
+
+    @Override
+    public void updateOffersForSpot(String response, boolean b, Beacon beacon){
+        Coupon[] coupons = new Gson().fromJson(response, Coupon[].class);
+        if(currentBeacon.equals(beacon)) {
+            saveCoupons(coupons, beacon);
+            startTimerForCoupon(beacon,coupons);
+        }
+
+    }
+
+    private void startTimerForCoupon(Beacon beacon, final Coupon[] coupons) {
+        if(null != coupons && coupons.length >0) {
+            final List<Coupon> couponsList = new ArrayList(Arrays.asList(coupons));
+            Collections.sort(couponsList);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //Do something after 100ms
+                    displayCoupon(couponsList.get(0));
+                    couponsList.remove(0);
+                    if (couponsList.size() != 0) {
+                        handler.postDelayed(this, 0);
+                    }
+                }
+            }, couponsList.get(0).getCouponStartTime());
+        }
+    }
+
+    private void displayCoupon(Coupon coupon) {
+        Toast.makeText(getActivity().getApplicationContext(), coupon.getCode(), Toast.LENGTH_LONG).show();
+    }
+
+    private void saveCoupons(Coupon[] coupons, Beacon beacon) {
+        for(Spot spot : allSpots){
+            if(spot.getMajorId().equals(beacon.getMajor()) &&
+                    spot.getMinorId().equals(beacon.getMinor()) &&
+                    spot.getUuid().equals(beacon.getProximityUUID())){
+                spot.setCoupons(Arrays.asList(coupons));
+                break;
+            }
+        }
+    }
+
+    private String findCurrentSpotId(final String majorId, final String minorId, final String uuid){
+        String beaconId = null;
+        for(Spot spot : allSpots){
+            if(spot.getMajorId().trim().equals(majorId.trim())) {
+                if (spot.getMinorId().trim().equals(minorId.trim())) {
+                    if (spot.getUuid().trim().equalsIgnoreCase(uuid.toLowerCase().trim())) {
+                        beaconId = spot.getBeaconId();
+                        break;
+                    }
+                }
+            }
+        }
+        return beaconId;
+    }
+
+
 }

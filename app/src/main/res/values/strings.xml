@@ -22,4 +22,6 @@
     <string name="get_location_id">/map/</string>
     <string name="rest_api_spots">/spots</string>
     <string name="restapi_map">/map/</string>
+    <string name="history_timer">50</string>
+    <string name="restapi_history">/history</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.learninghorizon.adwise.home.offers.util;
 
+import com.estimote.sdk.Beacon;
+
 import org.json.JSONArray;
 
 /**
@@ -9,4 +11,6 @@ public interface OffersPresenter {
      void updateLocationId(String locationId);
 
      void updateSpots(JSONArray response, boolean b);
+
+     void updateOffersForSpot(String response, boolean b, Beacon beacon);
 }

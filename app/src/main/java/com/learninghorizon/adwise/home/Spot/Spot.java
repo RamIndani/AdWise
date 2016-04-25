@@ -1,5 +1,10 @@
 package com.learninghorizon.adwise.home.spot;
 
+import com.learninghorizon.adwise.home.coupon.Coupon;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ramnivasindani on 4/23/16.
  */
@@ -18,6 +23,19 @@ public class Spot {
 
     private String spotName;
 
+    private List<Coupon> coupons = new ArrayList<Coupon>();
+
+    public List<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
+    }
+
+    public void addCoupon(Coupon coupon) {
+        this.coupons.add(coupon);
+    }
     public String getSpotName() {
         return spotName;
     }

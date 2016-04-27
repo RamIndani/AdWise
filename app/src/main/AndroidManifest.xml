@@ -16,6 +16,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name="com.oym.indoor.LocationService"
+            android:exported="false" />
         <activity
             android:name=".loginsignup.LoginSignup"
             android:screenOrientation="portrait">

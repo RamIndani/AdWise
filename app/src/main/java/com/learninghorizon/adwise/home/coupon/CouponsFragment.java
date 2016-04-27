@@ -19,9 +19,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.learninghorizon.adwise.R;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * Created by ramnivasindani on 4/24/16.
  */

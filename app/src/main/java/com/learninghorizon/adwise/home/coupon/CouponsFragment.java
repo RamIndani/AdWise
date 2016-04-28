@@ -18,6 +18,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.learninghorizon.adwise.R;
+import com.learninghorizon.adwise.home.offers.OffersDataUtil;
+import com.learninghorizon.adwise.home.spot.Spot;
 
 /**
  * Created by ramnivasindani on 4/24/16.
@@ -30,20 +32,24 @@ public class CouponsFragment extends Fragment {
         super.onCreateView(layoutInflater,container, saveInstanceState);
         View view = layoutInflater.inflate(R.layout.coupon_fragment, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.qrcode);
-        String couponCode= "coupon-code";
-        try {
-            WindowManager manager = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-            Display display = manager.getDefaultDisplay();
-            Point point = new Point();
-            display.getSize(point);
-            int width = point.x;
-            int height = point.y;
-            int smallerDimension = width < height ? width : height;
-            smallerDimension = smallerDimension * 3/4;
-            Bitmap bitmap = encodeAsBitmap(couponCode, smallerDimension);
-            imageView.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
+        Spot currentSpot = OffersDataUtil.getInstance().getCurrentSpot();
+        if(null != currentSpot && !currentSpot.getActiveCoupons().isEmpty()) {
+            String couponCode = currentSpot.getActiveCoupons().get(0).getCode();
+
+            try {
+                WindowManager manager = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+                Display display = manager.getDefaultDisplay();
+                Point point = new Point();
+                display.getSize(point);
+                int width = point.x;
+                int height = point.y;
+                int smallerDimension = width < height ? width : height;
+                smallerDimension = smallerDimension * 3 / 4;
+                Bitmap bitmap = encodeAsBitmap(couponCode, smallerDimension);
+                imageView.setImageBitmap(bitmap);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
         }
         return view;
     }

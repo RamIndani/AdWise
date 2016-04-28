@@ -55,7 +55,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/ic_favorite_border_black_24dp"
+            android:background="@drawable/ic_favorite_black_24dp"
             />
     </RelativeLayout>
     </LinearLayout>

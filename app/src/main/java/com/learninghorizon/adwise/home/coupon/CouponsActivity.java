@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.learninghorizon.adwise.R;
+import com.learninghorizon.adwise.home.offers.OffersDataUtil;
+import com.learninghorizon.adwise.home.spot.Spot;
 
 import org.apache.maven.artifact.ant.shaded.cli.Commandline;
 
@@ -15,8 +17,6 @@ public class CouponsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons);
-        String couponCode = getIntent().getExtras().getString("coupon");
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         CouponsFragment couponsFragment = new CouponsFragment();

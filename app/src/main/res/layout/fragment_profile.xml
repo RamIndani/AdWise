@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:src="@drawable/ic_person_white_24dp"
+        android:id="@+id/profile_pic"
+        android:background="@color/gray"
+       />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/username"
+        android:layout_below="@id/profile_pic"
+        android:text="Ramnivas Indani"
+        android:gravity="center"/>welcome
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="@string/logout"
+        android:id="@+id/logout"
+        android:layout_below="@id/username"
+        android:background="@drawable/rounded_button"/>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_fab"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_create_black_24dp"
+        app:layout_anchor="@id/profile_pic"
+        app:backgroundTint="@color/colorFavoriteFab"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>

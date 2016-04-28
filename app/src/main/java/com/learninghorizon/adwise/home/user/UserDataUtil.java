@@ -1,5 +1,8 @@
 package com.learninghorizon.adwise.home.user;
 
+
+import java.util.List;
+
 /**
  * Created by ramnivasindani on 4/24/16.
  */
@@ -15,6 +18,14 @@ public class UserDataUtil {
     }
     private User user;
 
+
+    public List<String> getFavorites(){
+        if(null != user) {
+            return user.getFavourites();
+        }
+        return null;
+    }
+
     public void setUser(User user){
         this.user = user;
     }
@@ -26,4 +37,7 @@ public class UserDataUtil {
         throw new Exception("Missing user");
     }
 
+    public String getPassword() {
+        return user.getPassword();
+    }
 }

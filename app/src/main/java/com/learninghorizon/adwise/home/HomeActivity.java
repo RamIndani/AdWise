@@ -75,8 +75,8 @@ public class HomeActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     protected void onResume() {
         super.onResume();
-
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
+
     }
 
     @Override

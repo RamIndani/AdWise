@@ -7,4 +7,6 @@
     <color name="red">#ff0000</color>
     <color name="black">#000000</color>
     <color name="gray">#c0c0c0</color>
+    <color name="colorFavoriteFab" >#9C27B0</color>
+    <color name="colorOfferFab">#FF5722</color>
 </resources>

@@ -21,6 +21,7 @@ import com.estimote.sdk.SystemRequirementsChecker;
 import com.learninghorizon.adwise.R;
 import com.learninghorizon.adwise.home.coupon.CouponsActivity;
 import com.learninghorizon.adwise.home.coupon.CouponsFragment;
+import com.learninghorizon.adwise.home.profile.ProfileFragment;
 import com.learninghorizon.adwise.loginsignup.AdWiseApplication;
 import com.learninghorizon.adwise.widget.view.SlidingTabLayout;
 
@@ -65,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements ActionBar.TabList
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                loadOffers("batmap");
+                loadProfile();
                 return false;
             }
         });
@@ -94,13 +95,12 @@ public class HomeActivity extends AppCompatActivity implements ActionBar.TabList
 
     }
 
-    public void loadOffers(String coupon){
-        Toast.makeText(getApplicationContext(), "Load currently valid coupons", Toast.LENGTH_LONG).show();
-        Intent showCouponIntent = new Intent(this, CouponsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("coupon",coupon);
-        showCouponIntent.putExtras(bundle);
-        startActivity(showCouponIntent);
+    public void loadProfile(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.menu, new ProfileFragment());
+        fragmentTransaction.addToBackStack("profile");
+        fragmentTransaction.commit();
     }
 
 }

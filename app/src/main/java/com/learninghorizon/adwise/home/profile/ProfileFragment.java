@@ -23,6 +23,7 @@ import com.learninghorizon.adwise.R;
 import com.learninghorizon.adwise.home.offers.util.RestUtil;
 import com.learninghorizon.adwise.home.user.UserDataUtil;
 import com.learninghorizon.adwise.loginsignup.AdWiseApplication;
+import com.learninghorizon.adwise.loginsignup.LoginSignup;
 
 /**
  * Fragment to display user profile
@@ -109,9 +110,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.logout: {
+                logoutUser();
                 break;
             }
         }
+    }
+
+    private void logoutUser() {
+        UserDataUtil.getInstance().clear();
+        SharedPreferences sharedPreferences = AdWiseApplication.getIntance().getSharedPreferences(getActivity().getString(R.string.adwise_shared_preferences), Context.MODE_APPEND);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String username = AdWiseApplication.getIntance().getString(R.string.username);
+        editor.remove(AdWiseApplication.getIntance().getString(R.string.username));
+        editor.remove(AdWiseApplication.getIntance().getString(R.string.password));
+        editor.remove(AdWiseApplication.getIntance().getString(R.string.profile_pic));
+        editor.commit();
+        Intent intent = new Intent(AdWiseApplication.getIntance(), LoginSignup.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void captureProfilePic() {
@@ -123,7 +142,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (requestCode == RESULT_OK) {
 
             Uri selectedImage = data.getData();
 
@@ -142,6 +161,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
 
             saveImage(selectedImage);
+            loadImage(selectedImage.toString());
         }
     }
 

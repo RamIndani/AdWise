@@ -40,4 +40,10 @@ public class UserDataUtil {
     public String getPassword() {
         return user.getPassword();
     }
+
+    public void clear() {
+        user.setEmail(null);
+        user.setPassword(null);
+        user = null;
+    }
 }

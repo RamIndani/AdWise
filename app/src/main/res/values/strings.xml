@@ -29,4 +29,6 @@
     <string name="you_are_here">You are here!</string>
     <string name="rest_api_favorites">/favorite/</string>
     <string name="logout">Logout</string>
+    <string name="profile_pic">profilepic</string>
+    <string name="username">userName</string>
 </resources>

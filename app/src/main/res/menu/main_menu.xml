@@ -3,9 +3,9 @@
     xmlns:adwise="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="@string/offers"
+        android:title="@string/profile"
         android:id="@+id/offers"
-        android:icon="@drawable/ic_loyalty_white_24dp"
+        android:icon="@drawable/ic_person_white_24dp"
         adwise:showAsAction="always"
         />
 </menu>

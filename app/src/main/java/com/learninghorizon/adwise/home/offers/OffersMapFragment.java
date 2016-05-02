@@ -115,12 +115,7 @@ public class OffersMapFragment extends Fragment implements FavoritesPresenter,Co
 
             googleMap = mMapView.getMap();
 
-            go = new GoIndoor.Builder()
-                    .setContext(getActivity())
-                    .setAccount("sjsu")
-                    .setPassword("4a86rd6")
-                    .setConnectCallback(this)
-                    .build();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -192,6 +187,12 @@ public class OffersMapFragment extends Fragment implements FavoritesPresenter,Co
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        go = new GoIndoor.Builder()
+                .setContext(getActivity())
+                .setAccount("sjsu")
+                .setPassword("4a86rd6")
+                .setConnectCallback(this)
+                .build();
         beaconManager = new BeaconManager(AdWiseApplication.getIntance().getApplicationContext());
         beaconManager.connect(this);
         beaconManager.setMonitoringListener(this);

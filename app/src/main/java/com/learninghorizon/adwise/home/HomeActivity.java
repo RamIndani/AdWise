@@ -21,6 +21,7 @@ import com.estimote.sdk.SystemRequirementsChecker;
 import com.learninghorizon.adwise.R;
 import com.learninghorizon.adwise.home.coupon.CouponsActivity;
 import com.learninghorizon.adwise.home.coupon.CouponsFragment;
+import com.learninghorizon.adwise.home.profile.MainActivity;
 import com.learninghorizon.adwise.home.profile.ProfileFragment;
 import com.learninghorizon.adwise.loginsignup.AdWiseApplication;
 import com.learninghorizon.adwise.widget.view.SlidingTabLayout;
@@ -96,11 +97,8 @@ public class HomeActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     public void loadProfile(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.menu, new ProfileFragment());
-        fragmentTransaction.addToBackStack("profile");
-        fragmentTransaction.commit();
+        Intent loadProfileIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(loadProfileIntent);
     }
 
 }

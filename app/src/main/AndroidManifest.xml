@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
@@ -14,6 +14,7 @@
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
+
     <application
         android:name=".loginsignup.AdWiseApplication"
         android:allowBackup="true"
@@ -24,9 +25,11 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAVxRK3ofgIqTlSM7w2uNWtKP8ahhJA9KU" />
+
         <service
             android:name="com.oym.indoor.LocationService"
             android:exported="false" />
+
         <activity
             android:name=".loginsignup.LoginSignup"
             android:screenOrientation="portrait">
@@ -39,7 +42,8 @@
         <activity
             android:name=".home.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".home.coupon.CouponsActivity"></activity>
+        <activity android:name=".home.coupon.CouponsActivity" />
+        <activity android:name=".home.profile.MainActivity"></activity>
     </application>
 
 </manifest>

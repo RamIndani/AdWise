@@ -42,8 +42,10 @@
         <activity
             android:name=".home.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".home.coupon.CouponsActivity" />
-        <activity android:name=".home.profile.MainActivity"></activity>
+        <activity android:name=".home.coupon.CouponsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".home.profile.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -142,7 +142,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_OK) {
+        if (requestCode == RESULT_OK && null != data && null != data.getData()) {
 
             Uri selectedImage = data.getData();
 
@@ -166,10 +166,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void saveImage(Uri selectedImage) {
-        SharedPreferences adWisePreferences = AdWiseApplication.getIntance().getSharedPreferences(
-                AdWiseApplication.getIntance().getString(R.string.adwise_shared_preferences), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = adWisePreferences.edit();
-        editor.putString("profilepic", selectedImage.toString());
-        editor.commit();
+        if(null != selectedImage) {
+            SharedPreferences adWisePreferences = AdWiseApplication.getIntance().getSharedPreferences(
+                    AdWiseApplication.getIntance().getString(R.string.adwise_shared_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = adWisePreferences.edit();
+            editor.putString("profilepic", selectedImage.toString());
+
+            editor.commit();
+        }
     }
 }

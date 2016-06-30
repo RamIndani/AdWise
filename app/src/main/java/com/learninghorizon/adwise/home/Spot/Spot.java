@@ -130,4 +130,13 @@ public class Spot {
         result = 31 * result + (activeCoupons != null ? activeCoupons.hashCode() : 0);
         return result;
     }
+
+    public boolean contains(Coupon coupon) {
+        for(Coupon activeCoupon : activeCoupons){
+            if(activeCoupon.getCouponId().equalsIgnoreCase(coupon.getCouponId())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

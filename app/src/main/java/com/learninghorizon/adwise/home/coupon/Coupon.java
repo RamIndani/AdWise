@@ -17,7 +17,7 @@ public class Coupon implements Comparable{
 
     private int couponStartTime;
 
-
+    private long couponActiveTime;
     private int duration;
 
 
@@ -77,6 +77,14 @@ public class Coupon implements Comparable{
             return this.couponStartTime > ((Coupon) coupon).getCouponStartTime() ? 1 : 0;
         }
         return 0;
+    }
+
+    public long getCouponActiveTime() {
+        return couponActiveTime;
+    }
+
+    public void setCouponActiveTime(long couponActiveTime) {
+        this.couponActiveTime = couponActiveTime;
     }
 }
 

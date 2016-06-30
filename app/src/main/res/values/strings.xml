@@ -31,4 +31,7 @@
     <string name="logout">Logout</string>
     <string name="profile_pic">profilepic</string>
     <string name="username">userName</string>
+    <string name="timer">--:--</string>
+    <string name="coupon_description">Coupon Description</string>
+    <string name="no_coupon">Sorry no coupon</string>
 </resources>

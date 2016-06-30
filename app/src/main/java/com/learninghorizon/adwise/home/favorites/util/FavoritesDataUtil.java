@@ -2,6 +2,7 @@ package com.learninghorizon.adwise.home.favorites.util;
 
 import com.learninghorizon.adwise.home.favorites.FavoritesFragment;
 import com.learninghorizon.adwise.home.spot.Spot;
+import com.learninghorizon.adwise.home.user.UserDataUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ public class FavoritesDataUtil {
     public void addFavorite(final Spot spot){
         if(null != spot) {
             favorites.add(spot);
+            UserDataUtil.getInstance().addFavorite(spot);
         }
     }
 
@@ -30,8 +32,9 @@ public class FavoritesDataUtil {
     public void removeFavorite(String beaconId) {
         Iterator itr = favorites.iterator();
         while(itr.hasNext()){
-            if(itr.next().equals(beaconId)){
+            if(((Spot)itr.next()).getBeaconId().equals(beaconId)){
                 itr.remove();
+                UserDataUtil.getInstance().removeFavorite(beaconId);
                 break;
             }
         }

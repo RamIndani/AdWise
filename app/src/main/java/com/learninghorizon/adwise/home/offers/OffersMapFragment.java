@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -353,27 +354,30 @@ public class OffersMapFragment extends Fragment implements FavoritesPresenter,Co
     public void updateSpots(JSONArray response, boolean b) {
         if(null != response) {
             Spot[] spots = new Gson().fromJson(response.toString(), Spot[].class);
-            allSpots.clear();
-            allSpots.addAll(Arrays.asList(spots));
-            SpotDataUtil.getInstance().setSpots(allSpots);
-            for(Spot beacon : allSpots) {
-                for (com.oym.indoor.Beacon location : go.getBeacons()) {
-                    if (location.getUuid().equalsIgnoreCase(beacon.getUuid().toString()) &&
-                            location.getMajor() == Integer.valueOf(beacon.getMajorId()) &&
-                            location.getMinor() == Integer.valueOf(beacon.getMinorId())) {
-                        marker = new MarkerOptions().position(
-                                new LatLng(location.getLatitude(), location.getLongitude())).title(beacon.getSpotName());
-                        marker.icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                        googleMap.addMarker(marker);
-                        FavoritesFragment.LoadFavorites();
-                        FavoritesFragment.notifyAdapter();
-                        break;
+            if(allSpots.isEmpty()) {
+                allSpots.clear();
+                allSpots.addAll(Arrays.asList(spots));
+            }
+                SpotDataUtil.getInstance().setSpots(allSpots);
+                for (Spot beacon : allSpots) {
+                    for (com.oym.indoor.Beacon location : go.getBeacons()) {
+                        if (location.getUuid().equalsIgnoreCase(beacon.getUuid().toString()) &&
+                                location.getMajor() == Integer.valueOf(beacon.getMajorId()) &&
+                                location.getMinor() == Integer.valueOf(beacon.getMinorId())) {
+                            marker = new MarkerOptions().position(
+                                    new LatLng(location.getLatitude(), location.getLongitude())).title(beacon.getSpotName());
+                            marker.icon(BitmapDescriptorFactory
+                                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                            googleMap.addMarker(marker);
+                            FavoritesFragment.LoadFavorites();
+                            FavoritesFragment.notifyAdapter();
+                            break;
+                        }
                     }
                 }
-            }
-            //favoritesAdapter.notifyDataSetChanged();
-            startTimer(currentBeacon);
+                //favoritesAdapter.notifyDataSetChanged();
+                startTimer(currentBeacon);
+
         }
     }
 
@@ -411,7 +415,9 @@ public class OffersMapFragment extends Fragment implements FavoritesPresenter,Co
             if(spot.getUuid().trim().equalsIgnoreCase(String.valueOf(beacon.getProximityUUID()).trim())
                     && Integer.valueOf(spot.getMajorId()) == beacon.getMajor()
                     && Integer.valueOf(spot.getMinorId()) == beacon.getMinor()){
-                spot.addActiveCoupons(coupon);
+                if(!spot.contains(coupon)) {
+                    spot.addActiveCoupons(coupon);
+                }
                 break;
             }
         }
@@ -419,6 +425,7 @@ public class OffersMapFragment extends Fragment implements FavoritesPresenter,Co
 
     private void displayCoupon(Coupon coupon) {
         Toast.makeText(getActivity().getApplicationContext(), coupon.getCode(), Toast.LENGTH_LONG).show();
+        coupon.setCouponActiveTime(new Date().getTime());
     }
 
     private void saveCoupons(Coupon[] coupons, Beacon beacon) {

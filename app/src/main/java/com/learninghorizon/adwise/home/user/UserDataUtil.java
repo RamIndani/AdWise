@@ -1,6 +1,9 @@
 package com.learninghorizon.adwise.home.user;
 
 
+import com.learninghorizon.adwise.home.spot.Spot;
+
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,5 +48,19 @@ public class UserDataUtil {
         user.setEmail(null);
         user.setPassword(null);
         user = null;
+    }
+
+    public void removeFavorite(String beaconId) {
+        Iterator itr = user.getFavourites().iterator();
+        while(itr.hasNext()){
+            if(itr.next().equals(beaconId)){
+                itr.remove();
+                break;
+            }
+        }
+    }
+
+    public void addFavorite(Spot spot){
+        user.getFavourites().add(spot.getBeaconId());
     }
 }
